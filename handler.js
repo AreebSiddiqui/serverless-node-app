@@ -17,7 +17,7 @@ const query = async (event) => {
     client.connect();
     let result = await client.query(QUERY);
     result && client.end(); 
-    
+    return result;
 };
 
 module.exports = {query};
