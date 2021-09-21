@@ -1,7 +1,7 @@
 'use strict';
 require('dotenv').config();
 const { Pool, Client } = require('pg')
-const query = async (event) => {
+const hello = async (event) => {
   
   const QUERY = 'SELECT name from public."city"';
 
@@ -27,4 +27,4 @@ const query = async (event) => {
     }
 };
 
-module.exports = {query};
+module.exports = {hello};
