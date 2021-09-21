@@ -15,9 +15,16 @@ const query = async (event) => {
 });
 
     client.connect();
-    let result = await client.query(QUERY);
-    result && client.end(); 
-    return result;
+    try {
+      let result = await client.query(QUERY);
+      if (result) {
+        client.end();
+        return 'Query executed successfully';
+      } 
+    }
+    catch(e){ 
+      return 'Error executing query' + e;
+    }
 };
 
 module.exports = {query};
