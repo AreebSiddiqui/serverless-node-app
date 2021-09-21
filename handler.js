@@ -14,29 +14,19 @@ module.exports.hello = async event => {
     database: process.env.DB_NAME,
 });
 
-    client.connect();
-    try {
+      await client.connect();
       let result = await client.query(QUERY);
       if (result) {
        await client.end();
-        return {
-          statusCode: 200,
-          body: JSON.stringify(
-            {
-              message: 'Query executed successfully!'
-            }),
-        };
-         
-      } 
-    }
-    catch(e){ 
-      return {
-        statusCode: 400,
+       return {
+        statusCode: 200,
         body: JSON.stringify(
           {
-            message: 'Not executed successfully'
-          }
+            message: 'Go Serverless v3.0! Your function executed successfully!'
+          },
+          null,
+          2
         ),
       };
-  };
+    }    
 }
