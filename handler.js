@@ -20,18 +20,30 @@ const hello = async (event) => {
       if (result) {
         client.end();
         return {
-          "statusCode": 200,
-          "body": json.dumps('Query executed successfully')
-        }
+          statusCode: 200,
+          body: JSON.stringify(
+            {
+              message: 'Query executed successfully!'
+            },
+            null,
+            2
+          ),
+        };
          
       } 
     }
     catch(e){ 
       return {
-        "statusCode": 500,
-        "body": json.dumps(e)
-      }
-    }
-};
+        statusCode: 400,
+        body: JSON.stringify(
+          {
+            message: 'Not executed successfully'
+          },
+          null,
+          2
+        )
+      };
+  };
+}
 
 module.exports = {hello};
