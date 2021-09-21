@@ -1,18 +1,23 @@
 'use strict';
+require('dotenv').config();
+const { Pool, Client } = require('pg')
+const query = async (event) => {
+  
+  const QUERY = 'SELECT name from public."city"';
 
-module.exports.hello = async (event) => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+  const client = new Client({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+});
+
+    client.connect();
+    let result = await client.query(QUERY);
+    result && client.end(); 
+    
 };
+
+module.exports = {query};
