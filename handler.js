@@ -18,16 +18,15 @@ const hello = async (event) => {
     try {
       let result = await client.query(QUERY);
       if (result) {
-        client.end();
+       await client.end();
         return {
           statusCode: 200,
           body: JSON.stringify(
             {
               message: 'Query executed successfully!'
-            },
-            null,
-            2
-          ),
+            }),
+            headers: { 'Content-Type': 'application/json' },
+
         };
          
       } 
@@ -38,10 +37,9 @@ const hello = async (event) => {
         body: JSON.stringify(
           {
             message: 'Not executed successfully'
-          },
-          null,
-          2
-        )
+          }
+        ),
+        headers: { 'Content-Type': 'application/json' },
       };
   };
 }
