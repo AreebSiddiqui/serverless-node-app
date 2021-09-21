@@ -28,5 +28,16 @@ module.exports.hello = async event => {
           2
         ),
       };
-    }    
+    }
+    
+    return {
+      statusCode: 200,
+      body: JSON.stringify(
+        {
+          message: 'Go Serverless v3.0! Your function executed successfully2!'
+        },
+        null,
+        2
+      ),
+    }
 }
