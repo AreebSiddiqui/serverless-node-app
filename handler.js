@@ -19,11 +19,18 @@ const hello = async (event) => {
       let result = await client.query(QUERY);
       if (result) {
         client.end();
-        return 'Query executed successfully';
+        return {
+          "statusCode": 200,
+          "body": json.dumps('Query executed successfully')
+        }
+         
       } 
     }
     catch(e){ 
-      return 'Error executing query' + e;
+      return {
+        "statusCode": 500,
+        "body": json.dumps(e)
+      }
     }
 };
 
