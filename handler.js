@@ -1,11 +1,8 @@
 'use strict';
 require('dotenv').config();
-const { Pool, Client } = require('pg')
+const {Client } = require('pg')
 module.exports.hello = async event => {
-  console.log('FIRST CONSOLE')
   const QUERY = 'SELECT name from public."city"';
-  
-  console.log('FIRST CONSOLE');
   
   const client = new Client({
     host: process.env.DB_HOST,
@@ -14,35 +11,28 @@ module.exports.hello = async event => {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
   });
-  console.log('SECOND CONSOLE');
-  
-  await client.connect();
-  console.log('THIRD CONSOLE');
-  let result = await client.query(QUERY);
-  if (result) {
-        console.log('FOUR CONSOLE');
-        console.log("RESULT:::>", result.rows);
-       await client.end();
-       return {
+
+  try {
+
+    await client.connect();
+    let result = await client.query(QUERY);
+    if (result) {
+      console.log("RESULT:::>", result.rows);
+      await client.end();
+      return {
         statusCode: 200,
-        body: JSON.stringify(
-          {
-            message: 'Go Serverless v3.0! Your function executed successfully!'
-          },
-          null,
-          2
-        ),
+        body: JSON.stringify({
+          message: 'Query executed successfully!'
+        })
       };
     }
-  console.log('FIVE CONSOLE');
+  }
+  catch(e) {
     return {
-      statusCode: 200,
-      body: JSON.stringify(
-        {
-          message: 'Go Serverless v3.0! Your function executed successfully2!'
-        },
-        null,
-        2
-      ),
-    }
+      statusCode: 400,
+      body: JSON.stringify({
+        message: 'ERROR: unable to execute query!'+ e.message
+      })
+    };
+  }
 }
