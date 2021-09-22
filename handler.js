@@ -17,7 +17,7 @@ module.exports.hello = async event => {
     await client.connect();
     let result = await client.query(QUERY);
     if (result) {
-      console.log("RESULT:::>", result.rows);
+      console.log("RESULT::>", result.rows);
       await client.end();
       return {
         statusCode: 200,
