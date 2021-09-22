@@ -21,6 +21,7 @@ module.exports.hello = async event => {
   let result = await client.query(QUERY);
   if (result) {
         console.log('FOUR CONSOLE');
+        console.log("RESULT:::>", result.rows);
        await client.end();
        return {
         statusCode: 200,
